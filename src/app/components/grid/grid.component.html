@@ -1,0 +1,13 @@
+<mat-grid-list cols="{{x}}" rowHeight="{{y}}:{{x}}">
+  <div *ngFor="let item of  counter;  let i = index">
+    <mat-grid-tile *ngIf="!isPosition(i)"></mat-grid-tile>
+
+    <mat-grid-tile class="currentPosition" *ngIf="isPosition(i)">
+      <mat-icon  *ngIf="direction == 'N'" >keyboard_arrow_up</mat-icon>
+      <mat-icon *ngIf="direction == 'S'" >keyboard_arrow_down</mat-icon>
+      <mat-icon *ngIf="direction == 'E'" >keyboard_arrow_right</mat-icon>
+      <mat-icon *ngIf="direction == 'W'" >keyboard_arrow_left</mat-icon>
+    </mat-grid-tile>
+
+  </div>
+</mat-grid-list>

@@ -1,0 +1,78 @@
+<div class="card">
+  <div class="card-body">
+    <div class="container" style="">
+      <div class="grid">
+
+        <app-grid [x]="dimensionX" [y]="dimensionY" [positionX]="positionX"
+                  [positionY]="positionY" [direction]="direction"></app-grid>
+      </div>
+      <div class="form">
+        <div [formGroup]="gridForm">
+          <mat-form-field appearance="outline">
+            <mat-label>Dimension X</mat-label>
+            <input matInput type="number" formControlName="dimensionX">
+            <mat-error>Dimension should be greater than 0.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Dimension Y</mat-label>
+            <input matInput type="number" formControlName="dimensionY">
+            <mat-error>Dimension should be greater than 0.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Position initiale X</mat-label>
+            <input matInput type="number" formControlName="inititalPositionX">
+            <mat-error>La position de X doit être comprise entre [ 0 et {{dimensionX - 1}} ].</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Position initiale Y</mat-label>
+            <input matInput type="number" formControlName="inititalPositionY">
+            <mat-error>La position de Y doit être comprise entre [ 0 et {{dimensionY - 1}} ].</mat-error>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Direction initiale</mat-label>
+            <mat-select formControlName="initialDirection">
+              <mat-option *ngFor="let position of positions" [value]="position">{{position}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="btn-group">
+            <button class="btn btn-info" (click)="addInstruction('A')">A</button>
+            <button class="btn btn-info" (click)="addInstruction('D')">D</button>
+            <button class="btn btn-info" (click)="addInstruction('G')">G</button>
+            <button class="btn btn-danger" (click)="deleteInstruction()">Supprimer</button>
+          </div>
+          <br><br>
+
+          <div class="card">
+            <div class="card-body">
+              <h4>Instructions: </h4>
+              <ng-container *ngFor=" let c of getInstructionAsArray(); let i=index">
+                <span *ngIf="i == currentInstructionIndex - 1" style="font-weight: bold;font-size: larger">{{c}} </span>
+                <span *ngIf="!(i == currentInstructionIndex - 1)">{{c}}</span>
+                <span *ngIf="i < getInstructionAsArray().length-1"
+                      style="margin-left: 10px;margin-right: 10px;font-size: large">-></span>
+              </ng-container>
+              <ng-container *ngIf="finishedExecution">
+                <h5>L'éxecution des instructions est finie.</h5>
+                <p>
+                  Position finale: x={{positionX}} y={{positionY}} orientation={{direction}}
+                </p>
+              </ng-container>
+            </div>
+
+          </div>
+          <br>
+          <button type="submit" [disabled]="!gridForm.valid" (click)="execute()" class="btn btn-primary">Exécuter
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
